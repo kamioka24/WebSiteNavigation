@@ -1,6 +1,8 @@
 package com.example.websitenavigation
 
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -31,5 +33,15 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        binding.button.setOnClickListener {
+            binding.webView.loadUrl("https://techbowl.co.jp/techtrain/mypage")
+        }
+
+        // タップしたときにブラウザを起動しない
+        binding.webView.webViewClient = WebViewClient()
+
+        // JavaScript 有効
+        binding.webView.settings.javaScriptEnabled = true
     }
 }
