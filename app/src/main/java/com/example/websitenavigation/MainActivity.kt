@@ -1,6 +1,8 @@
 package com.example.websitenavigation
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -35,11 +37,25 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         binding.button.setOnClickListener {
-            binding.webView.loadUrl("https://techbowl.co.jp/techtrain/mypage")
+            binding.webView.loadUrl("https://www.youtube.com/")
         }
 
+        binding.progressBar.visibility = View.INVISIBLE
+
         // タップしたときにブラウザを起動しない
-        binding.webView.webViewClient = WebViewClient()
+        binding.webView.webViewClient = object : WebViewClient() {
+            // web ページの読み込み開始
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                binding.progressBar.visibility = View.VISIBLE
+            }
+
+            // web ページの読み込み終了
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                binding.progressBar.visibility = View.INVISIBLE
+            }
+        }
 
         // JavaScript 有効
         binding.webView.settings.javaScriptEnabled = true
